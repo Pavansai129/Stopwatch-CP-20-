@@ -6,14 +6,13 @@ class Stopwatch extends Component {
   state = {isTimerRunning: false, timeElapsedInSeconds: 0, timeInMinutes: 0}
 
   increaseTimer = () => {
-    const {isTimerRunning} = this.state
-    if (!isTimerRunning) {
-      this.intervalId = setInterval(this.countUp, 1000)
-    }
+    this.intervalId = setInterval(this.countUp, 1000)
+    this.setState({isTimerRunning: true})
   }
 
   stopTimer = () => {
     clearTimeout(this.intervalId)
+    this.setState({isTimerRunning: false})
   }
 
   countUp = () => {
@@ -42,6 +41,7 @@ class Stopwatch extends Component {
   }
 
   render() {
+    const {isTimerRunning} = this.state
     return (
       <div className="stop-watch-bg-container">
         <div>
@@ -60,6 +60,7 @@ class Stopwatch extends Component {
                 className="button"
                 onClick={this.increaseTimer}
                 type="button"
+                disabled={isTimerRunning}
               >
                 Start
               </button>
